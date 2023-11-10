@@ -53,7 +53,6 @@ class cases(StatesGroup):
 
     cases_ = State()
     price = State()
-    zametka = State()
     usersc = State()
 
 class adminadd(StatesGroup):
