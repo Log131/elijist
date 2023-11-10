@@ -12,8 +12,8 @@ from datas import *
 
 
 
-token = '6577879146:AAFiwGmBxv7DwFyOoQfmqsd-kwDSPvupY9w'
-
+#token = '6577879146:AAFiwGmBxv7DwFyOoQfmqsd-kwDSPvupY9w'
+token = '6093970106:AAFugNzYa1SL0WTgReF4gHznIwqAF6tSRSY'
 bot = Bot(token=token)
 storage = MemoryStorage()
 dp = Dispatcher(bot=bot, storage=storage)
@@ -130,14 +130,15 @@ async def state_(msg: types.Message, state: FSMContext):
     data['usersc'] = msg.text
     try:
         async with aiosqlite.connect('teg.db') as tc:
-            await tc.execute('UPDATE users SET cases_ = ?, price = ?, zametka = ?, usersc = ?  WHERE user_id = ?', (data['cases_'],data['price'],data['zametka'],data['usersc'], msg.from_user.id,))
+            await tc.execute('UPDATE users SET cases_ = ?, price = ?, usersc = ?  WHERE user_id = ?', (data['cases_'],data['price'],data['usersc'], msg.from_user.id,))
             await tc.commit()
         
             
             await msg.answer('Готово нажмите мои наборы', reply_markup=casses())
             
             await state.finish()
-    except:
+    except Exception as e:
+        print(e)
         await state.finish()
         await msg.answer('Введите целое число')
     
@@ -162,7 +163,7 @@ async def check_cases(msg: types.Message):
         if datas[0] == '0':
             await msg.answer('У вас еще нет наборов что бы открыть набор нажмитe Открыть набор', reply_markup=casses())
         else:
-            await msg.answer(f'*▸ Платформа: {datas[1]} ▸ Получите оплату: {datas[2]} \n ▸ Описание: {datas[3]} \n \n ★ Писать: @{msg.from_user.username}* \n ☆ Наши выплаты: @SHARDopl', reply_markup=sendx(), parse_mode='Markdown')
+            await msg.answer(f'*▸ Платформа: {datas[1]} \n ▸ Получите оплату: {datas[2]} \n ▸ Описание: {datas[4]} \n \n ★ Писать: @{msg.from_user.username}* \n ☆ Наши выплаты: @SHARDopl', reply_markup=sendx(), parse_mode='Markdown')
 
 
 @dp.message_handler(text='Главное Меню')
@@ -210,7 +211,7 @@ async def sendx_(css: types.CallbackQuery):
             if s_ == '0' or None:
                 pass
             else:
-                s = await bot.send_message(chat_id=-1001892774322, text=f' * ▸ Платформа: {datas[1]}\n ▸ Получите оплату: {datas[2]} \n ▸ Описание: {datas[3]} \n \n \n ★ Писать:{css.from_user.username}* \n ☆ Наши выплаты: @SHARDopl', parse_mode='Markdown', reply_markup=row)
+                s = await bot.send_message(chat_id=-1001892774322, text=f' * ▸ Платформа: {datas[1]} \n ▸ Получите оплату: {datas[2]} \n ▸ Описание: {datas[4]} \n \n \n ★ Писать:{css.from_user.username}* \n ☆ Наши выплаты: @SHARDopl', parse_mode='Markdown', reply_markup=row)
             
             #s_ = await bot.send_message(chat_id='@fludilkaotzivnichka', text=f' 📈 {datas[1]}\n 👩‍🔧 Нужно людей - {datas[4]} \n 💴 Оплата - {datas[2]} \n 🏷 Описание : {datas[3]} \n ✉️ Писать - @{css.from_user.username}')
             
