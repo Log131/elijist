@@ -245,7 +245,7 @@ async def sendx_(css: types.CallbackQuery):
 
 
 
-@dp.message_handler(text='📞 Связь с Гл.Админом')
+@dp.message_handler(text='📞 Связь с администрацией')
 async def sends_____(msg: types.Message):
     await msg.answer('*OWNER*:\n @elijist \n \n \n *SUPPORTS*:\n @fillmaan \n @dexshev', parse_mode='Markdown')
 

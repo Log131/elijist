@@ -13,7 +13,7 @@ def wel():
    
    
    
-   admin = KeyboardButton(text='📞 Связь с Гл.Админом')
+   admin = KeyboardButton(text='📞 Связь с администрацией')
    x.row(profile, cases)
    x.row(admin)
    return x
