@@ -33,9 +33,9 @@ def casses_():
    x = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
    x1 = KeyboardButton(text='Авито')
    x3 = KeyboardButton(text='Яндекс Карты')
-   x33 = KeyboardButton(text='Негатив Авито')
+   x33 = KeyboardButton(text='Яндекс.Услуги')
    x5 = KeyboardButton(text='2ГИС')
-   x55 = KeyboardButton(text='Zoon')
+   x55 = KeyboardButton(text='Google.Карты')
    
    x.row(x1, x3)
 

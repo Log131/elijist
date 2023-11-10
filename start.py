@@ -81,7 +81,7 @@ async def statex(msg: types.Message, state: FSMContext):
         else:
             await cases.cases_.set()
         
-            await msg.answer('Для Открытия набора выберите следующие данные:\n 1. Выберите тип', reply_markup=casses_())
+            await msg.answer('Для Открытия набора выберите следующие данные:\n 1. Выберите тип \n Если у вас другая платформа введите вручную', reply_markup=casses_())
     except:
         await state.finish()
         
@@ -224,7 +224,7 @@ async def sendx_(css: types.CallbackQuery):
             if s_ == '0' or None:
                 pass
             else:
-                s = await bot.send_message(chat_id=-1001892774322, text=f' * 📈 {datas[1]}\n 👩‍🔧 Нужно людей - {datas[4]} \n 💴 Оплата - {datas[2]} \n 🏷 Описание : {datas[3]} \n ✉️ Писать - @{css.from_user.username}*', parse_mode='Markdown', reply_markup=row)
+                s = await bot.send_message(chat_id=-1001892774322, text=f' * ▸ Платформа: {datas[1]}\n ▸ Получите оплату: {datas[2]} \n ▸ Описание: {datas[3]} \n \n \n ★ Писать:{css.from_user.username}* \n ☆ Наши выплаты: @SHARDopl', parse_mode='Markdown', reply_markup=row)
             
             #s_ = await bot.send_message(chat_id='@fludilkaotzivnichka', text=f' 📈 {datas[1]}\n 👩‍🔧 Нужно людей - {datas[4]} \n 💴 Оплата - {datas[2]} \n 🏷 Описание : {datas[3]} \n ✉️ Писать - @{css.from_user.username}')
             
@@ -240,7 +240,7 @@ async def sendx_(css: types.CallbackQuery):
                 async with tc.execute('SELECT * FROM iff WHERE user_id = ?', (css.from_user.id,)) as f_:
                     sends = await f_.fetchall()
             for i in sends:
-                await bot.edit_message_text(text=f'🔒 Набор закрыт, ожидайте следующие задания ❗️',chat_id=-1001892774322, message_id=i[1])
+                await bot.edit_message_text(text=f'🔒 *Набор исполнителей закрыт, идёт выдача заданий*...',chat_id=-1001892774322, message_id=i[1], parse_mode='Markdown')
                 #await bot.delete_message(chat_id='@fludilkaotzivnichka', message_id=i[2])
             async with aiosqlite.connect('teg.db') as tc:
                 await tc.execute('UPDATE users SET cases_ = ?, price = ?, zametka = ?, usersc = ? WHERE user_id = ?',(None, None, None, None, css.from_user.id,))
