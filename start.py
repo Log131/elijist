@@ -111,31 +111,18 @@ async def state__(msg: types.Message, state: FSMContext):
             data['price'] = msg.text
             await cases.next()
 
-            await msg.answer('Введите заметку для вашего набора. Она будет отображаться в комментарий к набору')
+            await msg.answer('Введите описание для вашего набора. Она будет отображаться в комментарий к набору')
     
         
         except:
             await state.finish()
-            await msg.answer('напишите целое число')
+            await msg.answer('Ошибка')
 
     
-@dp.message_handler(state=cases.zametka)
-async def stated(msg: types.Message, state: FSMContext):
-    try:
-        async with state.proxy() as data:
-            
-            data['zametka'] = msg.text
-    
-    
-    
-    
-    
-        await msg.answer('Сколько человек нужно')
-        await cases.next()
-    except:
 
-        await state.finish()
-        await msg.answer('Попробуйте заного')
+
+
+
     
    
 @dp.message_handler(state=cases.usersc)
@@ -176,7 +163,7 @@ async def check_cases(msg: types.Message):
         if datas[0] == '0':
             await msg.answer('У вас еще нет наборов что бы открыть набор нажмитe Открыть набор', reply_markup=casses())
         else:
-            await msg.answer(f' 📈  {datas[1]}\n 👩‍🔧 Нужно людей - {datas[4]} \n 💴 Оплата - {datas[2]} \n 🏷 Описание : {datas[3]} \n ✉️ Писать - @{msg.from_user.username}', reply_markup=sendx())
+            await msg.answer(f'*▸ Платформа: {datas[1]} ▸ Получите оплату: {datas[2]} \n ▸ Описание: {datas[3]} \n \n ★ Писать: @{msg.from_user.username}* \n ☆ Наши выплаты: @SHARDopl', reply_markup=sendx(), parse_mode='Markdown')
 
 
 @dp.message_handler(text='Главное Меню')
