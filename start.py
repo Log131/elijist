@@ -12,8 +12,8 @@ from datas import *
 
 
 
-#token = '6577879146:AAFiwGmBxv7DwFyOoQfmqsd-kwDSPvupY9w'
-token = '6093970106:AAFugNzYa1SL0WTgReF4gHznIwqAF6tSRSY'
+token = '6577879146:AAFiwGmBxv7DwFyOoQfmqsd-kwDSPvupY9w'
+
 bot = Bot(token=token)
 storage = MemoryStorage()
 dp = Dispatcher(bot=bot, storage=storage)
