@@ -33,7 +33,7 @@ async def check_s():
                         
                         
                         
-                        await bot.send_message(chat_id=6203509782, text=f'У пользователя : @{xdx[3]} - {xdx[1]} ID - {xdx[0]} Закончилась Админка')
+                       # await bot.send_message(chat_id=6203509782, text=f'У пользователя : @{xdx[3]} - {xdx[1]} ID - {xdx[0]} Закончилась Админка')
                         async with aiosqlite.connect('teg.db') as tc:
                             await tc.execute('DELETE FROM users WHERE user_id = ?', (xdx[0],))
                             await tc.commit()
