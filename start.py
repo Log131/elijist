@@ -3,7 +3,7 @@ from aiogram import Dispatcher,Bot,executor,types
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-
+from aiogram.utils.markdown import link
 from aiogram.dispatcher import FSMContext
 from keyboards import *
 import datetime
@@ -28,11 +28,11 @@ async def startx(msg: types.Message):
     
     else:
         await state_5(userid=msg.from_user.id,username=msg.from_user.username,first_name=msg.from_user.first_name)
-        await msg.answer('Добро пожаловать', reply_markup=wel())
+        await msg.answer_photo(photo='https://i.yapx.ru/XG82q.png',caption='Добро пожаловать!\nВыберите по кнопкам ниже, чем я могу Вам помочь\n\nНаш канал: @SHARDotz\nНаши выплаты: @SHARDopl', reply_markup=wel())
                 
             
 
-@dp.message_handler(text='🗂 Наборы')
+@dp.message_handler(text='Наборы')
 async def nabors(msg: types.Message):
     async with aiosqlite.connect('teg.db') as tc:
         async with tc.execute('SELECT time_delete FROM users WHERE user_id = ?', (msg.from_user.id,)) as f:
@@ -44,7 +44,7 @@ async def nabors(msg: types.Message):
 
             else:
                 
-                await msg.answer('Выберите Действие с наборами!', reply_markup=casses())
+                await msg.answer_photo(photo='https://i.yapx.ru/XG83F.png',caption='Выберите действие по кнопкам ниже', reply_markup=casses())
         
         except:
             pass
@@ -69,7 +69,7 @@ class searches_(StatesGroup):
     search_start = State()
 
 
-@dp.message_handler(text='Открыть Набор', state=None,)
+@dp.message_handler(text='Создать набор', state=None,)
 async def statex(msg: types.Message, state: FSMContext):
     async with aiosqlite.connect('teg.db') as tc:
         async with tc.execute('SELECT time_delete FROM users WHERE user_id = ?', (msg.from_user.id,)) as f:
@@ -80,7 +80,7 @@ async def statex(msg: types.Message, state: FSMContext):
         else:
             await cases.cases_.set()
         
-            await msg.answer('Для Открытия набора выберите следующие данные:\n 1. Выберите тип \n Если у вас другая платформа введите вручную', reply_markup=casses_())
+            await msg.answer('Выберите платформу либо введите её вручную', reply_markup=casses_())
     except:
         await state.finish()
         
@@ -97,7 +97,7 @@ async def state_(msg: types.Message, state: FSMContext):
 
         await cases.next()
     
-        await msg.answer('Введите сумму оплаты за отзыв')
+        await msg.answer('Введите оплату за отзыв')
     except:
         await state.finish()
 
@@ -110,7 +110,7 @@ async def state__(msg: types.Message, state: FSMContext):
             data['price'] = msg.text
             await cases.next()
 
-            await msg.answer('Введите описание для вашего набора. Она будет отображаться в комментарий к набору')
+            await msg.answer('Введите описание к набору')
     
         
         except:
@@ -134,7 +134,7 @@ async def state_(msg: types.Message, state: FSMContext):
             await tc.commit()
         
             
-            await msg.answer('Готово нажмите мои наборы', reply_markup=casses())
+            await msg.answer('Набор создан!\nЧтобы отправить/закрыть перейдите в «Управление набором»', reply_markup=casses())
             
             await state.finish()
     except Exception as e:
@@ -145,7 +145,7 @@ async def state_(msg: types.Message, state: FSMContext):
     
 
 
-@dp.message_handler(text='Мои Наборы')
+@dp.message_handler(text='Управление набором')
 async def check_cases(msg: types.Message):
 
 
@@ -163,10 +163,10 @@ async def check_cases(msg: types.Message):
         if datas[0] == '0':
             await msg.answer('У вас еще нет наборов что бы открыть набор нажмитe Открыть набор', reply_markup=casses())
         else:
-            await msg.answer(f'*▸ Платформа: {datas[1]} \n ▸ Получите оплату: {datas[2]} \n ▸ Описание: {datas[4]} \n \n ★ Писать: @{msg.from_user.username}* \n ☆ Наши выплаты: @SHARDopl', reply_markup=sendx(), parse_mode='Markdown')
+            await msg.answer(f'*▸ Платформа: {datas[1]} \n▸ Получите оплату: {datas[2]}₽ \n▸ Описание: {datas[4]} \n \n★ Писать: @{msg.from_user.username}* \n☆ Наши выплаты: @SHARDopl', reply_markup=sendx(), parse_mode='Markdown')
 
 
-@dp.message_handler(text='Главное Меню')
+@dp.message_handler(text='Назад')
 
 async def swelx_(msg: types.Message):
         await msg.answer('🎉', reply_markup=wel())
@@ -175,7 +175,7 @@ async def swelx_(msg: types.Message):
 
 
 
-@dp.message_handler(text='🆔 Профиль')
+@dp.message_handler(text='Профиль')
 async def profile(msg: types.Message):
         async with aiosqlite.connect('teg.db') as tc:
             async with tc.execute('SELECT * FROM users WHERE user_id = ?',(msg.from_user.id,)) as f_:
@@ -185,10 +185,10 @@ async def profile(msg: types.Message):
             tir = datetime.datetime.strptime(x[8], '%Y-%m-%d %H:%M')
             s = tir - datetime.datetime.now()
             f = s.days
-            await msg.answer(f' Ваш профиль: \n ➖ ➖ ➖ ➖ ➖ \n 🆔 : {x[0]} \n ➖ ➖ ➖ ➖ ➖ \n 🕰 Рецистрация Админки: {x[7]} \n ➖ ➖ ➖ ➖ ➖ \n ❗️ До конца Админки : ` {abs(f)} Дней ` ', parse_mode='Markdown')
+            await msg.answer_photo(photo='https://i.yapx.ru/XG8zz.png',caption=f' Добро пожаловать!\nИнформация о вашем профиле:\n \n➖ ➖ ➖ ➖ ➖ \n ID: {x[0]} \n Ваш статус: администратор\n➖ ➖ ➖ ➖ ➖', parse_mode='Markdown')
         except Exception as e:
             print(e)
-            await msg.answer(f' Ваш профиль: \n ➖ ➖ ➖ ➖ ➖ \n 🆔 : {x[0]} \n ➖ ➖ ➖ ➖ ➖ \n Админка : ` Недоступно ` ', parse_mode='Markdown')
+            await msg.answer_photo(photo='https://i.yapx.ru/XG8zz.png',caption=f' Добро пожаловать!\nИнформация о вашем профиле:\n \n➖ ➖ ➖ ➖ ➖ \n ID: {x[0]} \n Ваш статус: исполнитель\n➖ ➖ ➖ ➖ ➖', parse_mode='Markdown')
 
 
 
@@ -199,7 +199,7 @@ async def profile(msg: types.Message):
 async def sendx_(css: types.CallbackQuery):
     try:
         row = InlineKeyboardMarkup()
-        rows = InlineKeyboardButton(text='📝 Откликнуться', url=f'https://t.me/{css.from_user.username}') 
+        rows = InlineKeyboardButton(text='Откликнуться', url=f'https://t.me/{css.from_user.username}') 
         if css.data == 'starts_':
             async with aiosqlite.connect('teg.db') as tc:
                 async with tc.execute('SELECT * FROM users WHERE user_id = ?',(css.from_user.id,)) as f:
@@ -208,10 +208,10 @@ async def sendx_(css: types.CallbackQuery):
                 async with tc.execute('SELECT time_delete FROM users WHERE user_id = ?', (css.from_user.id,)) as f_:
                     s_ = f_.fetchone()
             row.add(rows)
-            if s_ == '0' or None:
+            if s_[0] == '0' or s_[0] is None:
                 pass
             else:
-                s = await bot.send_message(chat_id=-1001892774322, text=f' * ▸ Платформа: {datas[1]} \n ▸ Получите оплату: {datas[2]} \n ▸ Описание: {datas[4]} \n \n \n ★ Писать:{css.from_user.username}* \n ☆ Наши выплаты: @SHARDopl', parse_mode='Markdown', reply_markup=row)
+                s = await bot.send_message(chat_id=-1001892774322, text=f' *▸ Платформа: {datas[1]} \n▸ Получите оплату: {datas[2]}₽ \n▸ Описание: {datas[4]} \n \n \n★ Писать: @{css.from_user.username}* \n☆ Наши выплаты: @SHARDopl', parse_mode='Markdown', reply_markup=row)
             
             #s_ = await bot.send_message(chat_id='@fludilkaotzivnichka', text=f' 📈 {datas[1]}\n 👩‍🔧 Нужно людей - {datas[4]} \n 💴 Оплата - {datas[2]} \n 🏷 Описание : {datas[3]} \n ✉️ Писать - @{css.from_user.username}')
             
@@ -227,7 +227,7 @@ async def sendx_(css: types.CallbackQuery):
                 async with tc.execute('SELECT * FROM iff WHERE user_id = ?', (css.from_user.id,)) as f_:
                     sends = await f_.fetchall()
             for i in sends:
-                await bot.edit_message_text(text=f'🔒 *Набор исполнителей закрыт, идёт выдача заданий*...',chat_id=-1001892774322, message_id=i[1], parse_mode='Markdown')
+                await bot.edit_message_text(text=f' 🔒 *Данное задание закончилось.*\n *Дождитесь нового, чтобы приступить к работе* \n \n • {link("Как начать?", "https://telegra.ph/Kak-nachat-rabotu-06-06")} \n • {link("Наши выплаты", "https://t.me/shardopl")}',chat_id=-1001892774322, message_id=i[1], parse_mode='Markdown',disable_web_page_preview=True,)
                 #await bot.delete_message(chat_id='@fludilkaotzivnichka', message_id=i[2])
             async with aiosqlite.connect('teg.db') as tc:
                 await tc.execute('UPDATE users SET cases_ = ?, price = ?, zametka = ?, usersc = ? WHERE user_id = ?',(None, None, None, None, css.from_user.id,))
@@ -245,9 +245,9 @@ async def sendx_(css: types.CallbackQuery):
 
 
 
-@dp.message_handler(text='📞 Связь с администрацией')
+@dp.message_handler(text='Связь с администрацией')
 async def sends_____(msg: types.Message):
-    await msg.answer('*OWNER*:\n @elijist \n \n \n *SUPPORTS*:\n @fillmaan \n @dexshev', parse_mode='Markdown')
+    await msg.answer_photo(photo='https://i.yapx.ru/XG80r.png',caption=' Если требуется помощь, можете обратиться к администрации\nканала по следующим контактам:\n \n➖ ➖ ➖ ➖ ➖\n Owner: @elijist \n Support: @fillmaan\n➖ ➖ ➖ ➖ ➖', parse_mode='Markdown')
 
 
 
@@ -459,7 +459,7 @@ async def state_ads______(msg: types.Message, state: FSMContext):
                 async with tc.execute('SELECT username FROM users WHERE user_id = ?', (data['add_xdx'],)) as t:
                     srs = await t.fetchone()
             await bot.send_message(chat_id=686674950, text=f'@{msg.from_user.username} Добавил - @{srs[0]} На {msg.text} Дней')
-            await bot.send_message(chat_id=data['add_xdx'],text='Вам выдали админку')
+            await bot.send_photo(photo='https://i.yapx.ru/XG87c.png',caption='Вам выдали админку!',chat_id=data['add_xdx'])
     
     except Exception as e:
         print(e)
@@ -480,7 +480,6 @@ async def state_adsrs(css: types.CallbackQuery, state: FSMContext):
 @dp.callback_query_handler(text_contains='remove_')
 async def remove_it(css: types.CallbackQuery):
     s = css.data.split('_')
-    print(s)
     try:
         async with aiosqlite.connect('teg.db') as tc:
             async with tc.execute('SELECT username FROM users WHERE user_id = ? ', (int(s[1]),)) as t:

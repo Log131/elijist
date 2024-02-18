@@ -4,26 +4,26 @@ from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardMar
 
 def wel():
    x = ReplyKeyboardMarkup(resize_keyboard=True)
-   profile = KeyboardButton(text='🆔 Профиль')
+   profile = KeyboardButton(text='Профиль')
    
-   cases = KeyboardButton(text='🗂 Наборы')
+   cases = KeyboardButton(text='Наборы')
 
 
 
    
    
    
-   admin = KeyboardButton(text='📞 Связь с администрацией')
+   admin = KeyboardButton(text='Связь с администрацией')
    x.row(profile, cases)
    x.row(admin)
    return x
 def casses():
    x = ReplyKeyboardMarkup(resize_keyboard=True)
-   x1 = KeyboardButton(text='Открыть Набор')
+   x1 = KeyboardButton(text='Создать набор')
 
-   x3 = KeyboardButton(text='Мои Наборы')
+   x3 = KeyboardButton(text='Управление набором')
 
-   xback = KeyboardButton(text='Главное Меню')
+   xback = KeyboardButton(text='Назад')
 
    x.row(x1, x3)
    x.row(xback)
@@ -80,7 +80,7 @@ def archives():
 def ads_55():
    x = ReplyKeyboardMarkup(resize_keyboard=True)
    x5 = KeyboardButton(text='Список Админов')
-   x55 = KeyboardButton(text='Главное Меню')
+   x55 = KeyboardButton(text='Назад')
    x6 = KeyboardButton(text='Начать рассылку')
    x555 = KeyboardButton(text='Поиск Пользователя по нику')
    x.row(x5).row(x55).row(x6, x555)
